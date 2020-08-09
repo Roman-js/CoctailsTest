@@ -35,19 +35,29 @@ export const FiltersCocktails = () => {
         console.log(filters)
     };
     return (
+
         <View style={styles.container}>
-            <Text>Test task CoCtAiLs</Text>
-            <StatusBar style="auto"/>
+            {/*<StatusBar style="auto"/>*/}
             {filtersList.length > 1 ? filtersList.map(categoryName =>
-                <View key={categoryName.strCategory}>
+                <View key={categoryName.strCategory} style={{paddingTop: '20px'}}>
+
                     <Text style={styles.titles}>
                         {categoryName.strCategory}
                     </Text>
-                    <input type={'checkbox'}
-                           checked={filters.includes(categoryName.strCategory)}
-                    onChange={(e)=> addFilters(categoryName.strCategory, e.currentTarget.checked)}/>
+                    <View style={{display: 'flex', alignItems: 'flex-end', paddingRight: '20px'}}>
+                        <input type={'checkbox'}
+                               checked={filters.includes(categoryName.strCategory)}
+                               onChange={(e)=> addFilters(categoryName.strCategory, e.currentTarget.checked)}/>
+                    </View>
+
                 </View>) : null}
-            <button onClick={showChooseCocktails} ><NavLink to={'/cocktailsList'}>APPLY</NavLink></button>
+                <View style={{ display: 'flex', alignItems: 'center', padding: '27px'}}>
+            <button onClick={showChooseCocktails} style={{ backgroundColor: '#272727', width: '360px', height: '53px', border: '0'}}>
+                <NavLink to={'/cocktailsList'} style={{textDecoration: 'none', color: '#FFF'}}>
+                    APPLY
+                </NavLink>
+            </button>
+                </View>
         </View>
     );
 };
@@ -55,26 +65,20 @@ export const FiltersCocktails = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+       /* alignItems: 'center',*/
         position: 'absolute',
-        width: '349px',
-        height: '839px',
-        left: '30px',
+        width: '100%',
+        minHeight: '100vh',
+        left: '0',
         top: '96px',
-        backgroundColor: 'darkgreen'
+        boxShadow: '0 0 10px rgba(0,0,0,0.5)',
     },
     titles: {
         position: 'absolute',
-        width: '146px',
+        width: '200px',
         height: '835px',
         left: '30px',
 
     },
-    /*checkbox: {
-        position: 'absolute',
-        width: '25px',
-        height: '348px',
-        left: '354px',
-        top: '96px'
-    }*/
+
 });

@@ -12,7 +12,6 @@ export default function App() {
         <BrowserRouter>
             <React.StrictMode>
                 <Provider store={store}>
-                    {/*<FiltersCocktails/>*/}
                     <Cocktails/>
                 </Provider>
             </React.StrictMode>
@@ -20,11 +19,4 @@ export default function App() {
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'whitesmoke',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
+
