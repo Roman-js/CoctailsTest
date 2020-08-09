@@ -1,37 +1,53 @@
 import {StyleSheet, Text, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getCocktailsList} from "../01-bll/reducerOfCoctails";
+import {getCocktailsList, getFilteredCocktails} from "../01-bll/reducerOfCoctails";
 import Button from "react-native-web/dist/exports/Button";
 import {useAppState} from "react-native-hooks";
+import {NavLink} from "react-router-dom";
 
 
-export const Cards = () => {
+export const FiltersCocktails = () => {
+
     const filtersList = useSelector(state => state.page.categories);
     const dispatch = useDispatch();
-    const [state, setState] = useAppState({filters: ''});
+    const [filters, setFilters] = useState([]);
+
     useEffect(() => {
         dispatch(getCocktailsList())
-    }, [filtersList]);
+    }, []);
 
+    const showChooseCocktails = () => {
+        dispatch(getFilteredCocktails(filters))
 
-    /*const getAllCocktails = () => {
-        dispatch(getCocktailsList())
-    };*/
+    };
+    const sendOnFilters = () => {
+
+    };
+    const addFilters = (categoryName, isChecked) => {
+        setFilters(
+                isChecked
+                ?[...filters, categoryName]
+                :filters.filter(category => category !== categoryName)
+        );
+        console.log(filters)
+    };
     return (
         <View style={styles.container}>
             <Text>Test task CoCtAiLs</Text>
             <StatusBar style="auto"/>
-            {filtersList.length > 1 ? filtersList.map(item =>
-                <View>
+            {filtersList.length > 1 ? filtersList.map(categoryName =>
+                <View key={categoryName.strCategory}>
                     <Text style={styles.titles}>
-                        {item.strCategory}
+                        {categoryName.strCategory}
                     </Text>
-                    <input type={'checkbox'}/>
-
+                    <input type={'checkbox'}
+                           checked={filters.includes(categoryName.strCategory)}
+                    onChange={(e)=> addFilters(categoryName.strCategory, e.currentTarget.checked)}/>
                 </View>) : null}
+            <button onClick={showChooseCocktails} ><NavLink to={'/cocktailsList'}>APPLY</NavLink></button>
         </View>
     );
 };
