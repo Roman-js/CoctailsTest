@@ -11,7 +11,6 @@ const initialState = {
     cocktails: [],
     error: null,
     headerInformation: false,
-    TitleOfCategory: ''
 };
 
 const reducerOfCocktails = (state = initialState, action) => {
@@ -26,8 +25,8 @@ const reducerOfCocktails = (state = initialState, action) => {
         case GET_FILTERED_COCKTAILS: {
             return {
                 ...state,
-                cocktails: [...state.cocktails, ...action.listOfCocktails],
-                TitleOfCategory: action.NameOfCategory
+                cocktails: [...state.cocktails, action.NameOfCategory, ...action.listOfCocktails],
+
             }
         }
         case SET_ERROR: {

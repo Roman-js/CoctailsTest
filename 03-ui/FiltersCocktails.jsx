@@ -51,13 +51,13 @@ export const FiltersCocktails = () => {
                     </View>
 
                 </View>) : null}
+            <NavLink to={'/cocktailsList'} style={{textDecoration: 'none', color: '#FFF'}}>
                 <View style={{ display: 'flex', alignItems: 'center', padding: '27px'}}>
-            <button onClick={showChooseCocktails} style={{ backgroundColor: '#272727', width: '360px', height: '53px', border: '0'}}>
-                <NavLink to={'/cocktailsList'} style={{textDecoration: 'none', color: '#FFF'}}>
+            <button onClick={showChooseCocktails} style={{ backgroundColor: '#272727', maxWidth: '360px', width: '100%', height: '53px', border: '0', color: '#FFF'}}>
                     APPLY
-                </NavLink>
             </button>
                 </View>
+            </NavLink>
         </View>
     );
 };

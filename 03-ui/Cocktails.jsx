@@ -15,7 +15,7 @@ export const Cocktails = () => {
         <View>
             {/*<FiltersCocktails/>*/}
             {!headerSettings
-                ?<View style={{position: 'absolute', zIndex: 1, width: '100%', height: '70px', left: '0px', top: '0px', boxShadow: '0 0 10px rgba(0,0,0,0.5)', flex: 1, alignItems: 'flex-end', justifyContent: 'center', paddingRight: '10px'}}>
+                ?<View style={{position: 'fixed', backgroundColor: 'white', zIndex: 1, width: '100%', height: '70px', left: '0px', top: '0px', boxShadow: '0 0 10px rgba(0,0,0,0.5)', flex: 1, alignItems: 'flex-end', justifyContent: 'center', paddingRight: '10px'}}>
 
                     <Text>
                         <h1 style={{position: 'absolute',

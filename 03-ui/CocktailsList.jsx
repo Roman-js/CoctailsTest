@@ -11,19 +11,21 @@ import {useAppState} from "react-native-hooks";
 export const CocktailsList = () => {
 
     const cocktails = useSelector(state => state.page.cocktails);
-    const title = useSelector(state => state.page.TitleOfCategory);
     console.log(cocktails);
 
         return(
             <View style={{paddingTop: '100px', padding: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.5)'}}>
-                <Text><h1>{title}</h1></Text>
-                {cocktails.map(cocktail =>
+
+                {cocktails.map(cocktail => typeof(cocktail) === "object" ?
                     <View key={cocktail.id} style={{display: 'flex', flexDirection: 'row-reverse', justifyContent: 'flex-end' }}>
+
                         <Text style={{display:'flex', alignItems: 'center'}}>
                             {cocktail.strDrink}
                         </Text>
                         <img src={cocktail.strDrinkThumb} style={{width: '100px', height: '100px', padding: '20px'}}/>
+
                     </View>
+                    :<Text><h1>{cocktail}</h1></Text>
                 )}
 
             </View>
