@@ -1,52 +1,107 @@
-import {StyleSheet, Text, View} from "react-native";
-import {StatusBar} from "expo-status-bar";
+import {ScrollView, StyleSheet, Text, View} from "react-native";
 
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getCocktailsList} from "../01-bll/reducerOfCoctails";
-import Button from "react-native-web/dist/exports/Button";
-import {useAppState} from "react-native-hooks";
+import {getFilteredCocktails} from "../01-bll/reducerOfCoctails";
 
 
 export const CocktailsList = () => {
 
     const cocktails = useSelector(state => state.page.cocktails);
-    console.log(cocktails);
+    const [numOfLine, setNumOfLine] = useState(1);
+    const filter = useSelector(state => state.page.filters);
 
-        return(
-            <View style={{paddingTop: '100px', padding: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.5)'}}>
+    const dispatch = useDispatch()
 
-                {cocktails.map(cocktail => typeof(cocktail) === "object" ?
-                    <View key={cocktail.id} style={{display: 'flex', flexDirection: 'row-reverse', justifyContent: 'flex-end' }}>
 
-                        <Text style={{display:'flex', alignItems: 'center'}}>
-                            {cocktail.strDrink}
-                        </Text>
-                        <img src={cocktail.strDrinkThumb} style={{width: '100px', height: '100px', padding: '20px'}}/>
 
-                    </View>
-                    :<Text><h1>{cocktail}</h1></Text>
+    const handleScroll = (event) => {
+        /*debugger*/
+        console.log(event.nativeEvent.contentOffset.y);
+        const position = event.nativeEvent.contentOffset.y;
+        let maxHeight = event.nativeEvent.contentSize.height - 1000;
+        console.log(maxHeight);
+
+        if(position > maxHeight && numOfLine<=filter.length -1)
+        {dispatch(getFilteredCocktails(filter[numOfLine]))
+            setNumOfLine(numOfLine + 1);}
+        console.log(numOfLine);
+
+
+    };
+
+
+
+    return (
+        <View style={styles.container}>
+
+        <ScrollView
+            onScroll={handleScroll}
+            /*horizontal={true}*/
+            pagingEnabled={true}
+            scrollEnabled={true}
+            /*scrollEventThrottle={16}*/
+
+        >
+
+                {cocktails.map(cocktail => {
+
+                        return typeof (cocktail) === "object"
+
+                            ? <View key={cocktail.id}
+                                    style={styles.cocktailItem}>
+                                <View style={styles.cocktailName}>
+                                    <Text style={{color: '#7E7E7E', fontSize: '16px'}}>
+                                        {cocktail.strDrink}
+                                    </Text>
+                                </View>
+
+                                <img src={cocktail.strDrinkThumb}
+                                     style={{width: '100px', minWidth: '100px', height: '100px', padding: '20px'}}/>
+
+                            </View>
+                            :
+                            <View style={styles.title} key={Math.floor(Math.random() * 100)}>
+                                <Text style={{color: '#7E7E7E', fontSize: '18px'}}>{cocktail}</Text>
+                            </View>
+                    }
                 )}
 
-            </View>
-        )
+        </ScrollView>
+
+        </View>
+    )
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 2,
-        alignItems: 'flexStart',
-        justifyContent: 'spaceBetween',
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        top: '20px',
-        backgroundColor: 'darkgreen',
-
+        paddingTop: '100px',
+        padding: '10px',
+        boxShadow: '0 0 10px rgba(0,0,0,0.5)',
+        height: '100vh'
     },
-    eachCocktail: {
-        width: '100%',
-        height: '150px'
+    cocktailItem: {
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        justifyContent: 'flex-end'
+    },
+    cocktailName: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        maxWidth: '175px',
+        minWidth: '100px',
+        justifyContent: 'center',
+
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        lineHeight: '19px',
+    },
+    title: {
+
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        lineHeight: '16px',
+        padding: '21px',
     }
 
 });

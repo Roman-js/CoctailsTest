@@ -1,16 +1,21 @@
 import {cocktailApi} from "../02-dal/api";
+import {useSelector} from "react-redux";
 
 const GET_COCKTAILS_LIST = 'GET-COCKTAILS-LIST';
 const SET_ERROR = 'SET-ERROR';
 const GET_FILTERED_COCKTAILS = 'GET-FILTERED-COCKTAILS';
 const SETTINGS_OF_HEADER = 'SETTINGS-OF-HEADER';
+const SET_PRELOADER = 'SET-PRELOADER';
+const SET_FILTERS = 'SET-FILTERS';
 
 
 const initialState = {
     categories: [{}],
     cocktails: [],
+    filters: [],
     error: null,
     headerInformation: false,
+    preloader: false
 };
 
 const reducerOfCocktails = (state = initialState, action) => {
@@ -39,6 +44,16 @@ const reducerOfCocktails = (state = initialState, action) => {
                 ...state, headerInformation: action.headerSettings
             }
         }
+        case SET_PRELOADER: {
+            return {
+                ...state, preloader: action.preloader
+            }
+        }
+        case SET_FILTERS: {
+            return {
+                ...state, filters: action.filters
+            }
+        }
 
         default:
             return state
@@ -60,29 +75,56 @@ const getFilteredCocktailsSuccess = (listOfCocktails, NameOfCategory) => ({
 const setHeaderSettings = (headerSettings) => ({
     type: SETTINGS_OF_HEADER, headerSettings
 });
+const setPreloader = (preloader) => ({
+    type: SET_PRELOADER, preloader
+});
+const setArrayFilters = (filters) => ({
+    type: SET_FILTERS, filters
+});
 
 //thunks
 export const getCocktailsList = () => async (dispatch, getState) => {
-
+    dispatch(setPreloader(true));
     try {
         let res = await cocktailApi.getListCategories();
-        dispatch(getCocktailsListSuccess(res))
-        dispatch(setHeaderSettings(true))
+        dispatch(getCocktailsListSuccess(res));
+        dispatch(setHeaderSettings(true));
+        dispatch(setPreloader(false))
     } catch (e) {
-        dispatch(setErrorSuccess('some error'))
+        dispatch(setErrorSuccess('some error'));
+        dispatch(setPreloader(false))
     }
 };
 
-export const getFilteredCocktails = (filters) => async (dispatch, getState) => {
+export const getFilteredCocktails = (category) => async (dispatch, getState) => {
+    dispatch(setPreloader(true));
+
     try {
-        filters.map(async (filter) => {
-                let res = await cocktailApi.getFilteredCocktails(filter);
-                dispatch(getFilteredCocktailsSuccess(res, filter));
-                dispatch(setHeaderSettings(false))
-            }
-        )
+       /* filters.map(async (filter) => {*/
+        debugger
+                let res = await cocktailApi.getFilteredCocktails(category);//filter
+                dispatch(getFilteredCocktailsSuccess(res, category));//filter
+
+                dispatch(setHeaderSettings(false));
+                dispatch(setPreloader(false))
+         /*   }
+        )*/
     } catch (e) {
-        dispatch(setErrorSuccess('some error'))
+        dispatch(setErrorSuccess('some error'));
+        dispatch(setPreloader(false))
+    }
+};
+
+export const setFilters = (filters) => async (dispatch, getState) =>{
+    dispatch(setPreloader(true));
+    dispatch(setArrayFilters(filters));
+    try {
+
+        await  dispatch(getFilteredCocktails(filters[0]));
+        dispatch(setPreloader(false))
+    } catch (e) {
+        dispatch(setErrorSuccess('some error'));
+        dispatch(setPreloader(false))
     }
 };
 
