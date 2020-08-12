@@ -1,5 +1,4 @@
 import {cocktailApi} from "../02-dal/api";
-import {useSelector} from "react-redux";
 
 const GET_COCKTAILS_LIST = 'GET-COCKTAILS-LIST';
 const SET_ERROR = 'SET-ERROR';
@@ -19,7 +18,7 @@ const initialState = {
 };
 
 const reducerOfCocktails = (state = initialState, action) => {
-    console.log(action);
+
     switch (action.type) {
 
         case GET_COCKTAILS_LIST: {
@@ -100,27 +99,23 @@ export const getFilteredCocktails = (category) => async (dispatch, getState) => 
     dispatch(setPreloader(true));
 
     try {
-       /* filters.map(async (filter) => {*/
-        debugger
-                let res = await cocktailApi.getFilteredCocktails(category);//filter
-                dispatch(getFilteredCocktailsSuccess(res, category));//filter
+        let res = await cocktailApi.getFilteredCocktails(category);
+        dispatch(getFilteredCocktailsSuccess(res, category));
+        dispatch(setHeaderSettings(false));
+        dispatch(setPreloader(false))
 
-                dispatch(setHeaderSettings(false));
-                dispatch(setPreloader(false))
-         /*   }
-        )*/
     } catch (e) {
         dispatch(setErrorSuccess('some error'));
         dispatch(setPreloader(false))
     }
 };
 
-export const setFilters = (filters) => async (dispatch, getState) =>{
+export const setFilters = (filters) => async (dispatch, getState) => {
     dispatch(setPreloader(true));
     dispatch(setArrayFilters(filters));
     try {
 
-        await  dispatch(getFilteredCocktails(filters[0]));
+        await dispatch(getFilteredCocktails(filters[0]));
         dispatch(setPreloader(false))
     } catch (e) {
         dispatch(setErrorSuccess('some error'));

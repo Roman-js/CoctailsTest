@@ -17,9 +17,7 @@ export const FiltersCocktails = () => {
     }, []);
 
     const showChooseCocktails = () => {
-       /* dispatch(getFilteredCocktails(filters))*/
         dispatch(setFilters(filters))
-
     };
     const addFilters = (categoryName, isChecked) => {
         setLocalFilters(
@@ -33,10 +31,9 @@ export const FiltersCocktails = () => {
 
         <View style={styles.container}>
             {filtersList.length > 1
-                ? filtersList.map(categoryName => {
+                ? filtersList.map(categoryName =>
 
-                    return <View key={categoryName.strCategory} style={{paddingTop: '20px'}}>
-
+                     <View key={categoryName.strCategory} style={{paddingTop: '20px'}}>
                         <Text style={styles.titles}>
                             {categoryName.strCategory}
                         </Text>
@@ -46,10 +43,7 @@ export const FiltersCocktails = () => {
                                    onChange={(e) => addFilters(categoryName.strCategory, e.currentTarget.checked)}/>
                         </View>
                     </View>
-                })
-
-                : null
-
+                ) : null
             }
 
             <View style={styles.buttonBlock}>
@@ -57,14 +51,9 @@ export const FiltersCocktails = () => {
                     textDecoration: 'none', color: '#FFF', maxWidth: '360px',
                     width: '100%',
                 }}>
-                    <button onClick={showChooseCocktails} disabled={!filters.length} style={{
-                        backgroundColor: '#272727',
-                        maxWidth: '360px',
-                        width: '100%',
-                        height: '53px',
-                        border: '0',
-                        color: '#FFF'
-                    }}>
+                    <button onClick={showChooseCocktails} disabled={!filters.length}
+                            style={{backgroundColor: '#272727', maxWidth: '360px', width: '100%', height: '53px',
+                        border: '0', color: '#FFF'}}>
                         APPLY
                     </button>
                 </NavLink>

@@ -16,26 +16,15 @@ export const Cocktails = () => {
     const download = useSelector(state => state.page.preloader);
     return (
         <View>
-            {/*<FiltersCocktails/>*/}
+
             {download ? <img src={preloadImg} style={{width: '100px', height: '100px', padding: '100px'}}/> : null}
             {!headerSettings
                 ? <View style={styles.headerFilterContainer}>
 
                     <Text>
-                        <h1 style={{
-                            position: 'absolute',
-                            width: '86px',
-                            height: '28px',
-                            left: '14px',
-                            top: '9px',
-
-                            fontFamily: 'Roboto',
-                            fontStyle: 'normal',
-                            fontWeight: '500',
-                            fontSize: '24px',
-                            lineHeight: '28px',
-
-                            color: '#000000'
+                        <h1 style={{position: 'absolute', width: '86px', height: '28px', left: '14px', top: '9px',
+                            fontFamily: 'Roboto', fontStyle: 'normal', fontWeight: '500', fontSize: '24px',
+                            lineHeight: '28px', color: '#000000'
                         }}> Drinks
                         </h1>
                     </Text>
@@ -46,20 +35,9 @@ export const Cocktails = () => {
                 </View>
                 : <View style={styles.headerCocktailListContainer}>
                     <Text>
-                        <h1 style={{
-                            position: 'absolute',
-                            width: '69px',
-                            height: '28px',
-                            left: '57px',
-                            top: '4px',
-
-                            fontFamily: 'Roboto',
-                            fontStyle: 'normal',
-                            fontWeight: '500',
-                            fontSize: '24px',
-                            lineHeight: '28px',
-
-                            color: '#000000'
+                        <h1 style={{position: 'absolute', width: '69px', height: '28px', left: '57px', top: '4px',
+                            fontFamily: 'Roboto', fontStyle: 'normal', fontWeight: '500', fontSize: '24px',
+                            lineHeight: '28px', color: '#000000'
                         }}> Filters
                         </h1>
                     </Text>
@@ -101,5 +79,5 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         paddingLeft: '10px'
-    }
+    },
 });

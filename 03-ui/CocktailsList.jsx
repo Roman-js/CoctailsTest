@@ -10,45 +10,32 @@ export const CocktailsList = () => {
     const cocktails = useSelector(state => state.page.cocktails);
     const [numOfLine, setNumOfLine] = useState(1);
     const filter = useSelector(state => state.page.filters);
-
-    const dispatch = useDispatch()
-
-
+    const dispatch = useDispatch();
 
     const handleScroll = (event) => {
-        /*debugger*/
-        console.log(event.nativeEvent.contentOffset.y);
+
         const position = event.nativeEvent.contentOffset.y;
         let maxHeight = event.nativeEvent.contentSize.height - 1000;
-        console.log(maxHeight);
 
         if(position > maxHeight && numOfLine<=filter.length -1)
         {dispatch(getFilteredCocktails(filter[numOfLine]))
             setNumOfLine(numOfLine + 1);}
-        console.log(numOfLine);
-
 
     };
 
-
-
     return (
-        <View style={styles.container}>
+        <View style={styles.container} >
 
         <ScrollView
             onScroll={handleScroll}
             /*horizontal={true}*/
             pagingEnabled={true}
             scrollEnabled={true}
-            /*scrollEventThrottle={16}*/
-
+            scrollEventThrottle={16}
         >
-
                 {cocktails.map(cocktail => {
-
                         return typeof (cocktail) === "object"
-
-                            ? <View key={cocktail.id}
+                            ? <View key={cocktail.idDrink}
                                     style={styles.cocktailItem}>
                                 <View style={styles.cocktailName}>
                                     <Text style={{color: '#7E7E7E', fontSize: '16px'}}>
@@ -58,7 +45,6 @@ export const CocktailsList = () => {
 
                                 <img src={cocktail.strDrinkThumb}
                                      style={{width: '100px', minWidth: '100px', height: '100px', padding: '20px'}}/>
-
                             </View>
                             :
                             <View style={styles.title} key={Math.floor(Math.random() * 100)}>
@@ -92,15 +78,8 @@ const styles = StyleSheet.create({
         minWidth: '100px',
         justifyContent: 'center',
 
-        fontStyle: 'normal',
-        fontWeight: 'normal',
-        lineHeight: '19px',
     },
     title: {
-
-        fontStyle: 'normal',
-        fontWeight: 'normal',
-        lineHeight: '16px',
         padding: '21px',
     }
 
