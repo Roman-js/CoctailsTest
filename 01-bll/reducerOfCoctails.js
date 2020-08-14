@@ -82,6 +82,7 @@ const setArrayFilters = (filters) => ({
 });
 
 //thunks
+
 export const getCocktailsList = () => async (dispatch, getState) => {
     dispatch(setPreloader(true));
     try {
@@ -114,7 +115,6 @@ export const setFilters = (filters) => async (dispatch, getState) => {
     dispatch(setPreloader(true));
     dispatch(setArrayFilters(filters));
     try {
-
         await dispatch(getFilteredCocktails(filters[0]));
         dispatch(setPreloader(false))
     } catch (e) {

@@ -6,5 +6,5 @@ import reducerOfCocktails from "./reducerOfCoctails";
 const rootReducer = combineReducers({
     page: reducerOfCocktails
 });
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 export default store

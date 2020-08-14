@@ -9,29 +9,30 @@ export const CocktailsList = () => {
 
     const cocktails = useSelector(state => state.page.cocktails);
     const [numOfLine, setNumOfLine] = useState(1);
+
     const filter = useSelector(state => state.page.filters);
     const dispatch = useDispatch();
 
     const handleScroll = (event) => {
 
+
         const position = event.nativeEvent.contentOffset.y;
         let maxHeight = event.nativeEvent.contentSize.height - 1000;
 
         if(position > maxHeight && numOfLine<=filter.length -1)
-        {dispatch(getFilteredCocktails(filter[numOfLine]))
+        {dispatch(getFilteredCocktails(filter[numOfLine]));
             setNumOfLine(numOfLine + 1);}
 
     };
+
 
     return (
         <View style={styles.container} >
 
         <ScrollView
             onScroll={handleScroll}
-            /*horizontal={true}*/
-            pagingEnabled={true}
             scrollEnabled={true}
-            scrollEventThrottle={16}
+            /*scrollEventThrottle={16}*/
         >
                 {cocktails.map(cocktail => {
                         return typeof (cocktail) === "object"

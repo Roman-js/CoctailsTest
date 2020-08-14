@@ -13,6 +13,7 @@ export const cocktailApi = {
     },
 
     getFilteredCocktails(filters) {
+        console.log(filters);
         return instance.get(`filter.php?c=${filters}`)
             .then(res => res.data.drinks)
 
