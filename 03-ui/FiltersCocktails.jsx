@@ -33,8 +33,8 @@ export const FiltersCocktails = () => {
             {filtersList.length > 1
                 ? filtersList.map(categoryName =>
 
-                     <View key={categoryName.strCategory} style={{paddingTop: '20px'}}>
-                        <Text style={styles.titles} >
+                     <View key={categoryName.strCategory} style={{paddingTop: '20px'}} >
+                        <Text style={styles.titles} onClick={() => addFilters(categoryName.strCategory, true)}>
                             {categoryName.strCategory}
                         </Text>
                         <View style={styles.checkBoxes}>
@@ -46,11 +46,10 @@ export const FiltersCocktails = () => {
                                 <path d="M24.6339 0.686328C24.1458 0.198145 23.3544 0.198145 22.8661 0.686328L7.89035 15.6623L2.13391 9.90581C1.64578 9.41763 0.85437 9.41768 0.366138 9.90581C-0.122046 10.3939 -0.122046 11.1854 0.366138 11.6735L7.00647 18.3138C7.49446 18.8019 8.28645 18.8016 8.77424 18.3138L24.6339 2.4541C25.1221 1.96597 25.122 1.17451 24.6339 0.686328Z" fill="black"/>
                             </svg>
                                </View>:
-                            <input type={'checkbox'}
+                            <input type={'checkbox'} style={{opacity: 0}}
                                    checked={filters.includes(categoryName.strCategory)}
                                    onChange={(e) => addFilters(categoryName.strCategory, e.currentTarget.checked)}/>
                             }
-
                         </View>
                     </View>
                 ) : null
@@ -93,7 +92,8 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         fontSize: '16px',
         lineHeight: '19px',
-        color: '#7E7E7E'
+        color: '#7E7E7E',
+        zIndex: 1
     },
     checkBoxes: {
         display: 'flex',
