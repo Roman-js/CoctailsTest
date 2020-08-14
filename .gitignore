@@ -1,6 +1,7 @@
 node_modules/**/*
 .expo/*
 .node_modules/*
+echo '.idea'
 npm-debug.*
 *.jks
 *.p8
